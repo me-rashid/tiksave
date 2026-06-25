@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Terms of Service – TikSave</title>
+    <meta name="description" content="TikSave Terms of Service. Rules and responsibilities for using the app." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --primary: #8856EE;
+            --primary-dim: rgba(136, 86, 238, 0.10);
+            --primary-glow: rgba(136, 86, 238, 0.28);
+            --primary-border: rgba(136, 86, 238, 0.22);
+            --bg: #08080F;
+            --surface: #0F0F1A;
+            --text: #F0F0F8;
+            --muted: #7070A0;
+            --border: #1A1A2E;
+            --border2: #22223A;
+            --mono: 'JetBrains Mono', monospace;
+            --sans: 'Inter', sans-serif;
+        }
+
+        html { scroll-behavior: smooth; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(136,86,238,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(136,86,238,0.02) 1px, transparent 1px);
+            background-size: 52px 52px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 48px;
+            background: rgba(8,8,15,0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .nav-logo-mark {
+            width: 30px; height: 30px;
+            background: var(--primary-dim);
+            border: 1px solid var(--primary-border);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-logo-mark svg { width: 14px; height: 14px; display: block; }
+
+        .nav-logo-text {
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .nav-links { display: flex; gap: 28px; list-style: none; }
+        .nav-links a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.84rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--primary); }
+
+        .page-header {
+            position: relative;
+            z-index: 1;
+            padding: 140px 24px 64px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .page-header::after {
+            content: '';
+            position: absolute;
+            bottom: -1px; left: 50%;
+            transform: translateX(-50%);
+            width: 90px; height: 2px;
+            background: var(--primary);
+        }
+
+        .page-label {
+            font-family: var(--mono);
+            font-size: 0.65rem;
+            color: var(--primary);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+
+        .page-header h1 {
+            font-size: clamp(2.2rem, 5vw, 3.4rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.05;
+            margin-bottom: 16px;
+        }
+
+        .page-header p {
+            color: var(--muted);
+            font-size: 0.95rem;
+            max-width: 480px;
+            margin: 0 auto 20px;
+        }
+
+        .date-tag {
+            display: inline-block;
+            font-family: var(--mono);
+            font-size: 0.66rem;
+            color: var(--muted);
+            background: var(--surface);
+            border: 1px solid var(--border2);
+            border-radius: 4px;
+            padding: 4px 12px;
+            letter-spacing: 0.08em;
+        }
+
+        .content-wrap {
+            position: relative;
+            z-index: 1;
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 72px 24px 100px;
+        }
+
+        .summary-box {
+            background: var(--primary-dim);
+            border: 1px solid rgba(136,86,238,0.25);
+            border-radius: 14px;
+            padding: 24px 28px;
+            margin-bottom: 56px;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+
+        .summary-box .icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 2px; }
+        .summary-box p { color: var(--text); font-size: 0.91rem; line-height: 1.7; }
+        .summary-box strong {
+            display: block;
+            font-family: var(--mono);
+            font-size: 0.66rem;
+            color: var(--primary);
+            letter-spacing: 0.1em;
+            margin-bottom: 8px;
+        }
+
+        .toc {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 26px 28px;
+            margin-bottom: 60px;
+        }
+
+        .toc-title {
+            font-family: var(--mono);
+            font-size: 0.65rem;
+            color: var(--primary);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .toc ol {
+            list-style: none;
+            counter-reset: toc;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 8px 20px;
+        }
+
+        .toc li { counter-increment: toc; }
+
+        .toc a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.83rem;
+            transition: color 0.2s;
+        }
+
+        .toc a::before {
+            content: counter(toc, decimal-leading-zero);
+            font-family: var(--mono);
+            font-size: 0.65rem;
+            color: var(--primary);
+            opacity: 0.65;
+            min-width: 22px;
+        }
+
+        .toc a:hover { color: var(--primary); }
+
+        .policy-section {
+            margin-bottom: 48px;
+            scroll-margin-top: 96px;
+        }
+
+        .section-head {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+
+        .section-num {
+            font-family: var(--mono);
+            font-size: 0.64rem;
+            color: var(--primary);
+            background: var(--primary-dim);
+            border: 1px solid var(--primary-border);
+            border-radius: 4px;
+            padding: 3px 10px;
+            letter-spacing: 0.08em;
+            white-space: nowrap;
+        }
+
+        .section-head h2 {
+            font-size: 1.02rem;
+            font-weight: 600;
+            color: var(--text);
+            letter-spacing: -0.01em;
+        }
+
+        .policy-body {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 24px 28px;
+            color: var(--muted);
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+
+        .policy-body p + p { margin-top: 14px; }
+        .policy-body strong { color: var(--text); }
+        .policy-body a { color: var(--primary); text-decoration: none; }
+        .policy-body a:hover { text-decoration: underline; }
+
+        hr {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 52px 0;
+        }
+
+        footer {
+            position: relative;
+            z-index: 1;
+            border-top: 1px solid var(--border);
+            padding: 40px 48px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-brand { display: flex; align-items: center; gap: 10px; }
+        .footer-brand-mark {
+            width: 26px; height: 26px;
+            background: var(--primary-dim);
+            border: 1px solid var(--primary-border);
+            border-radius: 7px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .footer-brand-mark svg { width: 12px; height: 12px; display: block; }
+        .footer-brand-name { font-size: 0.9rem; font-weight: 700; color: var(--text); }
+
+        .footer-links { display: flex; gap: 24px; list-style: none; flex-wrap: wrap; }
+        .footer-links a { color: var(--muted); text-decoration: none; font-size: 0.83rem; transition: color 0.2s; }
+        .footer-links a:hover { color: var(--primary); }
+        .footer-copy { color: var(--muted); font-size: 0.74rem; font-family: var(--mono); }
+
+        @media (max-width: 640px) {
+            nav { padding: 14px 20px; }
+            .nav-links { display: none; }
+            .page-header { padding: 110px 20px 48px; }
+            .content-wrap { padding: 48px 20px 80px; }
+            .policy-body { padding: 18px 20px; }
+            .toc ol { grid-template-columns: 1fr; }
+            footer { flex-direction: column; padding: 32px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="index.html" class="nav-logo">
+        <div class="nav-logo-mark">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3V2z" fill="#8856EE"/>
+            </svg>
+        </div>
+        <span class="nav-logo-text">TikSave</span>
+    </a>
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+        <li><a href="terms.html">Terms</a></li>
+        <li><a href="deletion.html">Data Deletion</a></li>
+    </ul>
+</nav>
+
+<div class="page-header">
+    <div class="page-label">Legal</div>
+    <h1>Terms of Service</h1>
+    <p>By downloading or using TikSave, you agree to these terms. Please read them carefully.</p>
+    <span class="date-tag">Last updated: June 2025</span>
+</div>
+
+<div class="content-wrap">
+
+    <div class="summary-box">
+        <div class="icon">&#128203;</div>
+        <p>
+            <strong>IN SHORT</strong>
+            Use TikSave for lawful purposes only. Don't use it to download copyrighted content without permission. The service is provided as-is. We may update these terms as the app evolves.
+        </p>
+    </div>
+
+    <div class="toc">
+        <div class="toc-title">Contents</div>
+        <ol>
+            <li><a href="#t1">Acceptance of Terms</a></li>
+            <li><a href="#t2">Description of Service</a></li>
+            <li><a href="#t3">Acceptable Use</a></li>
+            <li><a href="#t4">Intellectual Property</a></li>
+            <li><a href="#t5">Disclaimer of Warranties</a></li>
+            <li><a href="#t6">Limitation of Liability</a></li>
+            <li><a href="#t7">Termination</a></li>
+            <li><a href="#t8">Changes to Terms</a></li>
+            <li><a href="#t9">Contact</a></li>
+        </ol>
+    </div>
+
+    <div class="policy-section" id="t1">
+        <div class="section-head">
+            <span class="section-num">01</span>
+            <h2>Acceptance of Terms</h2>
+        </div>
+        <div class="policy-body">
+            <p>By downloading, installing, or using TikSave ("the App"), you agree to be bound by these Terms of Service. If you do not agree to these terms, do not use the App.</p>
+            <p>These terms apply to all users of the App.</p>
+        </div>
+    </div>
+
+    <div class="policy-section" id="t2">
+        <div class="section-head">
+            <span class="section-num">02</span>
+            <h2>Description of Service</h2>
+        </div>
+        <div class="policy-body">
+            <p>TikSave is a mobile application for Android that allows you to download videos and audio from TikTok without watermarks. The App uses a third-party API (RapidAPI) to fetch video metadata and download URLs.</p>
+            <p>Use of the App requires an active internet connection. The App does not store your download history or track what you download.</p>
+            <p>We reserve the right to modify, suspend, or discontinue the service at any time, including for maintenance.</p>
+        </div>
+    </div>
+
+    <div class="policy-section" id="t3">
+        <div class="section-head">
+            <span class="section-num">03</span>
+            <h2>Acceptable Use</h2>
+        </div>
+        <div class="policy-body">
+            <p>You agree to use TikSave only for lawful purposes and in a manner that does not infringe the rights of others.</p>
+            <p>You must not use the App to download copyrighted content without permission from the rights holder. TikTok videos are subject to copyright, and downloading them without permission may violate TikTok's terms of service and copyright laws in your jurisdiction.</p>
+            <p>You must not attempt to reverse engineer, modify, or tamper with the App or its API integrations.</p>
+            <p>You must not use the App in a manner that could damage, disable, or impair the servers or networks connected to it.</p>
+            <p>We reserve the right to suspend or terminate access for users who violate these terms.</p>
+        </div>
+    </div>
+
+    <div class="policy-section" id="t4">
+        <div class="section-head">
+            <span class="section-num">04</span>
+            <h2>Intellectual Property</h2>
+        </div>
+        <div class="policy-body">
+            <p>The App, including its design, code, and branding, is owned by the developer. All rights reserved.</p>
+            <p>Nothing in these terms grants you any right to the App's source code, intellectual property, or infrastructure beyond the right to use the App as described herein.</p>
+            <p>Videos downloaded using the App remain the intellectual property of their respective creators. You are responsible for ensuring you have the right to download and use any content.</p>
+        </div>
+    </div>
+
+    <div class="policy-section" id="t5">
+        <div class="section-head">
+            <span class="section-num">05</span>
+            <h2>Disclaimer of Warranties</h2>
+        </div>
+        <div class="policy-body">
+            <p>The App is provided "as is" and "as available" without warranties of any kind, express or implied. We do not warrant that the App will be error-free, uninterrupted, or that download results will meet your expectations.</p>
+            <p>Download availability depends on TikTok's servers and the third-party API. We cannot guarantee that every TikTok video will be downloadable.</p>
+            <p>We do not warrant that using the App will be permissible or legal in your specific jurisdiction. You are responsible for ensuring your use of the App complies with local laws.</p>
+        </div>
+    </div>
+
+    <div class="policy-section" id="t6">
+        <div class="section-head">
+            <span class="section-num">06</span>
+            <h2>Limitation of Liability</h2>
+        </div>
+        <div class="policy-body">
+            <p>To the fullest extent permitted by applicable law, we shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of or inability to use the App, including any loss of data or inability to download videos.</p>
+            <p>We are not responsible for any legal consequences arising from your use of the App in violation of local laws or copyright regulations.</p>
+        </div>
+    </div>
+
+    <div class="policy-section" id="t7">
+        <div class="section-head">
+            <span class="section-num">07</span>
+            <h2>Termination</h2>
+        </div>
+        <div class="policy-body">
+            <p>We reserve the right to restrict or terminate access to the App at any time if we have reason to believe you have violated these Terms of Service.</p>
+            <p>You may stop using the App at any time. Uninstalling the App constitutes termination of your use.</p>
+        </div>
+    </div>
+
+    <div class="policy-section" id="t8">
+        <div class="section-head">
+            <span class="section-num">08</span>
+            <h2>Changes to Terms</h2>
+        </div>
+        <div class="policy-body">
+            <p>We may update these Terms of Service from time to time. When we do, we will update the date at the top of this page. Continued use of the App after changes constitutes acceptance of the new terms.</p>
+            <p>We encourage you to review these terms periodically.</p>
+        </div>
+    </div>
+
+    <div class="policy-section" id="t9">
+        <div class="section-head">
+            <span class="section-num">09</span>
+            <h2>Contact</h2>
+        </div>
+        <div class="policy-body">
+            <p>If you have any questions about these Terms of Service, please contact us.</p>
+            <p>Email: <a href="mailto:raashidk.official@gmail.com">raashidk.official@gmail.com</a></p>
+            <p>Phone: <a href="tel:+923236258870">0323 6258870</a></p>
+            <p>We aim to respond within 48 hours.</p>
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="summary-box">
+        <div class="icon">&#9878;&#65039;</div>
+        <p>Use TikSave responsibly and legally — download only content you have permission to save.</p>
+    </div>
+
+</div>
+
+<footer>
+    <div class="footer-brand">
+        <div class="footer-brand-mark">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3V2z" fill="#8856EE"/>
+            </svg>
+        </div>
+        <span class="footer-brand-name">TikSave</span>
+    </div>
+    <ul class="footer-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="terms.html">Terms of Service</a></li>
+        <li><a href="deletion.html">Data Deletion</a></li>
+        <li><a href="mailto:raashidk.official@gmail.com">Contact</a></li>
+    </ul>
+    <span class="footer-copy">&copy; 2025 TikSave. All rights reserved.</span>
+</footer>
+
+</body>
+</html>
