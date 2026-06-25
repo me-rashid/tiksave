@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TikSave – Download TikTok Videos Without Watermark</title>
+    <meta name="description" content="TikSave lets you download TikTok videos without watermark. Fast, free, and private. No account required." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --primary: #8856EE;
+            --primary-dim: rgba(136, 86, 238, 0.10);
+            --primary-glow: rgba(136, 86, 238, 0.25);
+            --primary-border: rgba(136, 86, 238, 0.20);
+            --green: #34D399;
+            --bg: #060610;
+            --bg2: #0B0B1C;
+            --surface: #0F0F1E;
+            --surface2: #14142A;
+            --text: #EEEEF8;
+            --sub: #9090B8;
+            --muted: #55557A;
+            --line: #1A1A30;
+            --line2: #22223A;
+            --mono: 'JetBrains Mono', monospace;
+            --display: 'Inter', sans-serif;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--display);
+            font-size: 16px;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(136,86,238,0.022) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(136,86,238,0.022) 1px, transparent 1px);
+            background-size: 56px 56px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 52px;
+            height: 64px;
+            background: rgba(6,6,16,0.88);
+            backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+
+        .logo-mark {
+            width: 32px; height: 32px;
+            background: var(--primary-dim);
+            border: 1px solid var(--primary-border);
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-mark svg { width: 18px; height: 18px; display: block; }
+
+        .nav-wordmark {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text);
+            letter-spacing: -0.01em;
+        }
+        .nav-wordmark em { font-style: normal; color: var(--primary); }
+
+        .nav-links { display: flex; gap: 36px; list-style: none; align-items: center; }
+        .nav-links a { color: var(--sub); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.18s; }
+        .nav-links a:hover { color: var(--primary); }
+
+        .hero {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 130px 24px 100px;
+        }
+
+        .hero-orb {
+            position: absolute;
+            top: 38%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 700px; height: 700px;
+            background: radial-gradient(ellipse, rgba(136,86,238,0.065) 0%, transparent 62%);
+            pointer-events: none;
+        }
+
+        .hero-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            background: var(--primary-dim);
+            border: 1px solid var(--primary-border);
+            border-radius: 100px;
+            padding: 7px 20px;
+            font-family: var(--mono);
+            font-size: 0.68rem;
+            color: var(--primary);
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            margin-bottom: 36px;
+            animation: riseIn 0.55s ease both;
+        }
+
+        .pill-dot {
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: var(--green);
+            box-shadow: 0 0 10px var(--green);
+            animation: breathe 2.2s ease-in-out infinite;
+        }
+
+        @keyframes breathe {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(1.5); }
+        }
+
+        .hero-kicker {
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            color: var(--green);
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            margin-bottom: 22px;
+            animation: riseIn 0.55s 0.06s ease both;
+        }
+
+        h1 {
+            font-size: clamp(3rem, 8vw, 5.5rem);
+            font-weight: 900;
+            line-height: 0.95;
+            letter-spacing: -0.04em;
+            margin-bottom: 28px;
+            animation: riseIn 0.55s 0.1s ease both;
+        }
+        h1 .pop { color: var(--primary); }
+
+        .hero-body {
+            max-width: 500px;
+            color: var(--sub);
+            font-size: 1.05rem;
+            font-weight: 400;
+            line-height: 1.8;
+            margin-bottom: 52px;
+            animation: riseIn 0.55s 0.18s ease both;
+        }
+
+        .cta-row {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            justify-content: center;
+            animation: riseIn 0.55s 0.26s ease both;
+        }
+
+        .cta-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            background: var(--primary);
+            color: #fff;
+            font-size: 0.92rem;
+            font-weight: 700;
+            padding: 13px 28px;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: opacity 0.18s, transform 0.14s;
+        }
+        .cta-primary:hover { opacity: 0.85; transform: translateY(-2px); }
+
+        .cta-ghost {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            background: transparent;
+            color: var(--text);
+            font-size: 0.92rem;
+            font-weight: 600;
+            padding: 13px 28px;
+            border-radius: 10px;
+            border: 1px solid var(--line2);
+            text-decoration: none;
+            transition: border-color 0.18s, color 0.18s, background 0.18s;
+        }
+        .cta-ghost:hover { border-color: var(--primary-border); color: var(--primary); background: var(--primary-dim); }
+
+        .lockup {
+            margin-top: 72px;
+            animation: riseIn 0.55s 0.34s ease both;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .lock-node { display: flex; flex-direction: column; align-items: center; gap: 7px; }
+
+        .lock-circle {
+            width: 52px; height: 52px;
+            border: 1px solid var(--primary-border);
+            border-radius: 50%;
+            background: var(--primary-dim);
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        .lock-circle svg {
+            width: 21px; height: 21px;
+            stroke: var(--primary);
+            fill: none;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .lock-label {
+            font-family: var(--mono);
+            font-size: 0.58rem;
+            color: var(--muted);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .lock-wire {
+            width: 60px; height: 1px;
+            background: linear-gradient(90deg, var(--primary-border), var(--primary), var(--primary-border));
+            position: relative;
+        }
+        .lock-wire::after {
+            content: '';
+            position: absolute;
+            top: -3px; left: 50%; transform: translateX(-50%);
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--primary);
+        }
+
+        .stats-bar {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            background: var(--surface);
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .stat-cell {
+            flex: 1;
+            max-width: 230px;
+            padding: 36px 22px;
+            text-align: center;
+            border-right: 1px solid var(--line);
+        }
+        .stat-cell:last-child { border-right: none; }
+
+        .stat-val {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--primary);
+            line-height: 1;
+            letter-spacing: -0.04em;
+            margin-bottom: 7px;
+        }
+
+        .stat-key {
+            font-family: var(--mono);
+            font-size: 0.62rem;
+            color: var(--muted);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .wrap {
+            position: relative;
+            z-index: 1;
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 110px 24px;
+        }
+
+        .eyebrow {
+            font-family: var(--mono);
+            font-size: 0.63rem;
+            color: var(--primary);
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .section-h {
+            font-size: clamp(1.9rem, 3.8vw, 2.9rem);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -0.035em;
+            margin-bottom: 60px;
+        }
+        .section-h span { color: var(--primary); }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(295px, 1fr));
+            gap: 14px;
+        }
+
+        .fcard {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 30px 26px;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.22s, transform 0.18s;
+        }
+
+        .fcard-line {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .fcard:hover { border-color: var(--primary-border); transform: translateY(-4px); }
+        .fcard:hover .fcard-line { opacity: 1; }
+
+        .fcard-icon {
+            width: 42px; height: 42px;
+            background: var(--primary-dim);
+            border: 1px solid var(--primary-border);
+            border-radius: 11px;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 20px;
+        }
+        .fcard-icon svg {
+            width: 20px; height: 20px;
+            stroke: var(--primary);
+            fill: none;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .fcard-title { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 10px; letter-spacing: -0.01em; }
+        .fcard-body { color: var(--sub); font-size: 0.88rem; line-height: 1.72; }
+
+        .band {
+            position: relative;
+            z-index: 1;
+            background: var(--bg2);
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+            padding: 90px 24px;
+            text-align: center;
+        }
+
+        .band-inner { max-width: 640px; margin: 0 auto; }
+        .band-inner p { color: var(--sub); font-size: 1.02rem; line-height: 1.8; margin-bottom: 36px; }
+
+        .pills {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 40px;
+        }
+        .pill {
+            background: var(--primary-dim);
+            border: 1px solid var(--primary-border);
+            border-radius: 100px;
+            padding: 7px 17px;
+            font-family: var(--mono);
+            font-size: 0.67rem;
+            color: var(--primary);
+            letter-spacing: 0.06em;
+        }
+
+        .app-preview {
+            margin-top: 72px;
+            animation: riseIn 0.55s 0.34s ease both;
+            text-align: center;
+        }
+
+        .app-preview .mockup {
+            display: inline-block;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 24px;
+            padding: 20px 16px 16px 16px;
+            max-width: 280px;
+            width: 100%;
+        }
+
+        .mockup-screen {
+            background: var(--bg);
+            border-radius: 16px;
+            padding: 20px 16px;
+            aspect-ratio: 9 / 19;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .mockup-screen .mock-title {
+            font-family: var(--display);
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .mockup-screen .mock-input {
+            width: 100%;
+            padding: 10px 14px;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.75rem;
+        }
+
+        .mockup-screen .mock-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary);
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+
+        .mockup-screen .mock-result {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary-dim);
+            border: 1px solid var(--primary-border);
+            border-radius: 8px;
+            text-align: center;
+            font-size: 0.7rem;
+            color: var(--primary);
+        }
+
+        footer {
+            position: relative;
+            z-index: 1;
+            border-top: 1px solid var(--line);
+            padding: 44px 52px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+
+        .foot-brand { display: flex; align-items: center; gap: 12px; }
+        .foot-brand-mark {
+            width: 28px; height: 28px;
+            background: var(--primary-dim);
+            border: 1px solid var(--primary-border);
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .foot-brand-mark svg { width: 14px; height: 14px; display: block; }
+        .foot-name { font-size: 0.92rem; font-weight: 700; color: var(--text); }
+
+        .foot-links { display: flex; gap: 28px; list-style: none; flex-wrap: wrap; }
+        .foot-links a { color: var(--sub); text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: color 0.18s; }
+        .foot-links a:hover { color: var(--primary); }
+
+        .foot-copy { color: var(--muted); font-size: 0.72rem; font-family: var(--mono); }
+
+        @keyframes riseIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 780px) {
+            nav { padding: 0 20px; }
+            .nav-links { display: none; }
+            .stats-bar { flex-wrap: wrap; }
+            .stat-cell { border-right: none; border-bottom: 1px solid var(--line); max-width: 100%; width: 50%; }
+            .lockup { display: none; }
+            footer { flex-direction: column; padding: 32px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="index.html" class="nav-logo">
+        <div class="logo-mark">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3V2z" fill="#8856EE"/>
+            </svg>
+        </div>
+        <span class="nav-wordmark">Tik<em>Save</em></span>
+    </a>
+    <ul class="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+        <li><a href="terms.html">Terms</a></li>
+        <li><a href="deletion.html">Data Deletion</a></li>
+        <li><a href="mailto:raashidk.official@gmail.com">Support</a></li>
+    </ul>
+</nav>
+
+<section class="hero">
+    <div class="hero-orb"></div>
+    <div class="hero-pill">
+        <div class="pill-dot"></div>
+        Android &nbsp;&middot;&nbsp; Free &nbsp;&middot;&nbsp; No Watermark
+    </div>
+    <div class="hero-kicker">Download &nbsp;&middot;&nbsp; Share &nbsp;&middot;&nbsp; Repeat</div>
+    <h1>Save TikTok.<br /><span class="pop">No watermark.</span></h1>
+    <p class="hero-body">Paste any TikTok link and download the video without watermark in HD quality. Fast, free, and private. No account needed.</p>
+    <div class="cta-row">
+        <a href="https://play.google.com/store/apps/details?id=com.videodownloder.tiktok" class="cta-primary">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            Get on Play Store
+        </a>
+        <a href="privacy.html" class="cta-ghost">Privacy Policy &rarr;</a>
+    </div>
+
+    <div class="app-preview">
+        <div class="mockup">
+            <div class="mockup-screen">
+                <div class="mock-title">⬇️ TikTok Downloader</div>
+                <div class="mock-input">https://www.tiktok.com/@user/video/...</div>
+                <div class="mock-btn">Download Video</div>
+                <div class="mock-result">✅ Video saved without watermark</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="stats-bar">
+    <div class="stat-cell"><div class="stat-val">HD</div><div class="stat-key">Quality</div></div>
+    <div class="stat-cell"><div class="stat-val">0</div><div class="stat-key">Logs kept</div></div>
+    <div class="stat-cell"><div class="stat-val">1 tap</div><div class="stat-key">To download</div></div>
+    <div class="stat-cell"><div class="stat-val">Free</div><div class="stat-key">Always</div></div>
+</div>
+
+<div class="wrap" id="features">
+    <div class="eyebrow">What you get</div>
+    <div class="section-h">Built for TikTok.<br /><span>Designed for you.</span></div>
+    <div class="grid-3">
+
+        <div class="fcard">
+            <div class="fcard-line"></div>
+            <div class="fcard-icon">
+                <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3V2z"/></svg>
+            </div>
+            <div class="fcard-title">No Watermark</div>
+            <p class="fcard-body">Download TikTok videos without the watermark. Get the original video in full quality, just as the creator uploaded it.</p>
+        </div>
+
+        <div class="fcard">
+            <div class="fcard-line"></div>
+            <div class="fcard-icon">
+                <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/></svg>
+            </div>
+            <div class="fcard-title">HD Quality</div>
+            <p class="fcard-body">Download in high definition. The app automatically detects the best available quality and delivers it to your device.</p>
+        </div>
+
+        <div class="fcard">
+            <div class="fcard-line"></div>
+            <div class="fcard-icon">
+                <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+            </div>
+            <div class="fcard-title">Private & Secure</div>
+            <p class="fcard-body">Your downloads stay on your device. We don't track what you download. No accounts, no logs, no data collection.</p>
+        </div>
+
+        <div class="fcard">
+            <div class="fcard-line"></div>
+            <div class="fcard-icon">
+                <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            </div>
+            <div class="fcard-title">Fast Downloads</div>
+            <p class="fcard-body">Powered by a high-speed API. Get your videos in seconds. No waiting, no buffering — just download and go.</p>
+        </div>
+
+        <div class="fcard">
+            <div class="fcard-line"></div>
+            <div class="fcard-icon">
+                <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.56 3.18 2 2 0 0 1 3.53 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6.13 6.13l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </div>
+            <div class="fcard-title">Audio Only Mode</div>
+            <p class="fcard-body">Extract the audio track from any TikTok video and save it as an MP3 file. Perfect for music and sound effects.</p>
+        </div>
+
+        <div class="fcard">
+            <div class="fcard-line"></div>
+            <div class="fcard-icon">
+                <svg viewBox="0 0 24 24"><path d="M4 4v16h16V4H4z M12 8v8 M8 12h8"/></svg>
+            </div>
+            <div class="fcard-title">Share Directly</div>
+            <p class="fcard-body">Share downloaded videos directly to other apps — WhatsApp, Instagram, Telegram, or anywhere else. One tap sharing.</p>
+        </div>
+
+    </div>
+</div>
+
+<div class="band">
+    <div class="band-inner">
+        <div class="eyebrow" style="text-align:center">Your privacy matters</div>
+        <div class="section-h" style="text-align:center;margin-bottom:18px">Download freely.<br /><span>Stay private.</span></div>
+        <p>TikSave does not collect any personal information. No accounts, no tracking, no logs. We don't store your download history. We don't know what you download. Your activity stays yours.</p>
+        <div class="pills">
+            <span class="pill">No account required</span>
+            <span class="pill">No activity logs</span>
+            <span class="pill">No data sold</span>
+            <span class="pill">No trackers</span>
+            <span class="pill">HD quality</span>
+            <span class="pill">Free to use</span>
+        </div>
+        <a href="privacy.html" class="cta-ghost">Read full privacy policy &rarr;</a>
+    </div>
+</div>
+
+<footer>
+    <div class="foot-brand">
+        <div class="foot-brand-mark">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3V2z" fill="#8856EE"/>
+            </svg>
+        </div>
+        <span class="foot-name">TikSave</span>
+    </div>
+    <ul class="foot-links">
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="terms.html">Terms of Service</a></li>
+        <li><a href="deletion.html">Data Deletion</a></li>
+        <li><a href="mailto:raashidk.official@gmail.com">Support</a></li>
+    </ul>
+    <span class="foot-copy">&copy; 2025 TikSave. All rights reserved.</span>
+</footer>
+
+</body>
+</html>
