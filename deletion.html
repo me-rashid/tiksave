@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data Deletion – TikSave</title>
+    <meta name="description" content="How to delete your data from TikSave. All data is local or temporary — you are always in full control." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --primary: #8856EE;
+            --primary-dim: rgba(136, 86, 238, 0.10);
+            --primary-glow: rgba(136, 86, 238, 0.28);
+            --primary-border: rgba(136, 86, 238, 0.22);
+            --bg: #08080F;
+            --surface: #0F0F1A;
+            --text: #F0F0F8;
+            --muted: #7070A0;
+            --border: #1A1A2E;
+            --border2: #22223A;
+            --mono: 'JetBrains Mono', monospace;
+            --sans: 'Inter', sans-serif;
+        }
+
+        html { scroll-behavior: smooth; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(136,86,238,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(136,86,238,0.02) 1px, transparent 1px);
+            background-size: 52px 52px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 48px;
+            background: rgba(8,8,15,0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .nav-logo-mark {
+            width: 30px; height: 30px;
+            background: var(--primary-dim);
+            border: 1px solid var(--primary-border);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-logo-mark svg { width: 14px; height: 14px; display: block; }
+
+        .nav-logo-text {
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .nav-links { display: flex; gap: 28px; list-style: none; }
+        .nav-links a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.84rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--primary); }
+
+        .page-header {
+            position: relative;
+            z-index: 1;
+            padding: 140px 24px 64px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .page-header::after {
+            content: '';
+            position: absolute;
+            bottom: -1px; left: 50%;
+            transform: translateX(-50%);
+            width: 90px; height: 2px;
+            background: var(--primary);
+        }
+
+        .page-label {
+            font-family: var(--mono);
+            font-size: 0.65rem;
+            color: var(--primary);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+
+        .page-header h1 {
+            font-size: clamp(2.2rem, 5vw, 3.4rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.05;
+            margin-bottom: 16px;
+        }
+
+        .page-header p {
+            color: var(--muted);
+            font-size: 0.95rem;
+            max-width: 480px;
+            margin: 0 auto 20px;
+        }
+
+        .date-tag {
+            display: inline-block;
+            font-family: var(--mono);
+            font-size: 0.66rem;
+            color: var(--muted);
+            background: var(--surface);
+            border: 1px solid var(--border2);
+            border-radius: 4px;
+            padding: 4px 12px;
+            letter-spacing: 0.08em;
+        }
+
+        .content-wrap {
+            position: relative;
+            z-index: 1;
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 72px 24px 100px;
+        }
+
+        .key-box {
+            background: var(--primary-dim);
+            border: 1px solid rgba(136,86,238,0.28);
+            border-radius: 14px;
+            padding: 24px 28px;
+            margin-bottom: 52px;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+
+        .key-box .icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 2px; }
+        .key-box div { flex: 1; }
+
+        .key-box strong {
+            display: block;
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            color: var(--primary);
+            letter-spacing: 0.1em;
+            margin-bottom: 8px;
+        }
+
+        .key-box p { color: var(--text); font-size: 0.92rem; line-height: 1.65; }
+
+        .section-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            margin-bottom: 24px;
+            overflow: hidden;
+        }
+
+        .section-card-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 20px 28px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-num {
+            font-family: var(--mono);
+            font-size: 0.66rem;
+            color: var(--primary);
+            background: var(--primary-dim);
+            border: 1px solid var(--primary-border);
+            border-radius: 4px;
+            padding: 3px 10px;
+            letter-spacing: 0.08em;
+            white-space: nowrap;
+        }
+
+        .section-card-header h2 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .section-card-body {
+            padding: 24px 28px;
+            color: var(--muted);
+            font-size: 0.91rem;
+            line-height: 1.8;
+        }
+
+        .section-card-body p + p { margin-top: 14px; }
+        .section-card-body strong { color: var(--text); }
+        .section-card-body a { color: var(--primary); text-decoration: none; }
+
+        .steps {
+            list-style: none;
+            counter-reset: steps;
+            margin-top: 16px;
+        }
+
+        .steps li {
+            counter-increment: steps;
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+            margin-bottom: 14px;
+        }
+
+        .steps li::before {
+            content: counter(steps);
+            font-family: var(--mono);
+            font-size: 0.72rem;
+            font-weight: 500;
+            color: var(--bg);
+            background: var(--primary);
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 3px;
+        }
+
+        .steps li span { color: var(--muted); font-size: 0.91rem; }
+
+        .step-sub {
+            font-family: var(--mono);
+            font-size: 0.68rem;
+            color: var(--primary);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin: 20px 0 12px;
+        }
+
+        .email-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 36px 28px;
+            text-align: center;
+            margin-top: 52px;
+        }
+
+        .email-card h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .email-card p {
+            color: var(--muted);
+            font-size: 0.9rem;
+            margin-bottom: 28px;
+            max-width: 420px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--primary);
+            color: #fff;
+            font-family: var(--mono);
+            font-size: 0.78rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 13px 26px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: box-shadow 0.2s, transform 0.15s;
+        }
+        .btn-primary:hover {
+            box-shadow: 0 0 28px var(--primary-glow);
+            transform: translateY(-2px);
+        }
+
+        .email-note {
+            display: block;
+            color: var(--muted);
+            font-family: var(--mono);
+            font-size: 0.76rem;
+            margin-top: 14px;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 52px 0;
+        }
+
+        footer {
+            position: relative;
+            z-index: 1;
+            border-top: 1px solid var(--border);
+            padding: 40px 48px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-brand { display: flex; align-items: center; gap: 10px; }
+        .footer-brand-mark {
+            width: 26px; height: 26px;
+            background: var(--primary-dim);
+            border: 1px solid var(--primary-border);
+            border-radius: 7px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .footer-brand-mark svg { width: 12px; height: 12px; display: block; }
+        .footer-brand-name { font-size: 0.9rem; font-weight: 700; color: var(--text); }
+
+        .footer-links { display: flex; gap: 24px; list-style: none; flex-wrap: wrap; }
+        .footer-links a { color: var(--muted); text-decoration: none; font-size: 0.83rem; transition: color 0.2s; }
+        .footer-links a:hover { color: var(--primary); }
+        .footer-copy { color: var(--muted); font-size: 0.74rem; font-family: var(--mono); }
+
+        @media (max-width: 640px) {
+            nav { padding: 14px 20px; }
+            .nav-links { display: none; }
+            .page-header { padding: 110px 20px 48px; }
+            .content-wrap { padding: 48px 20px 80px; }
+            .section-card-body, .section-card-header { padding: 18px 20px; }
+            footer { flex-direction: column; padding: 32px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="index.html" class="nav-logo">
+        <div class="nav-logo-mark">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3V2z" fill="#8856EE"/>
+            </svg>
+        </div>
+        <span class="nav-logo-text">TikSave</span>
+    </a>
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+        <li><a href="terms.html">Terms</a></li>
+        <li><a href="deletion.html">Data Deletion</a></li>
+    </ul>
+</nav>
+
+<div class="page-header">
+    <div class="page-label">User Rights</div>
+    <h1>Data Deletion</h1>
+    <p>How to delete your data from TikSave. You are always in complete control.</p>
+    <span class="date-tag">Last updated: June 2025</span>
+</div>
+
+<div class="content-wrap">
+
+    <div class="key-box">
+        <div class="icon">&#128737;</div>
+        <div>
+            <strong>KEY FACT</strong>
+            <p>TikSave does not maintain any user database. We don't store your download history, preferences, or any personal information. All data exists locally on your device — uninstalling the app removes everything. There's nothing stored on our servers to delete.</p>
+        </div>
+    </div>
+
+    <div class="section-card">
+        <div class="section-card-header">
+            <span class="section-num">01</span>
+            <h2>What Data TikSave Stores</h2>
+        </div>
+        <div class="section-card-body">
+            <p><strong>On our servers:</strong> Nothing. We do not operate any backend servers that store user data. All API requests are transient and not logged or stored.</p>
+            <p><strong>On your device (local only):</strong></p>
+            <p><strong>Downloaded Videos</strong> — Videos you download are saved to your device's storage in the TikTokSave folder. These are standard MP4 files.</p>
+            <p><strong>App Preferences</strong> — Your settings (auto-paste, HD quality preference, etc.) are stored in SharedPreferences on your device.</p>
+            <p>No personal information, no account data, and no identifiers are stored anywhere.</p>
+        </div>
+    </div>
+
+    <div class="section-card">
+        <div class="section-card-header">
+            <span class="section-num">02</span>
+            <h2>Deleting Downloaded Videos</h2>
+        </div>
+        <div class="section-card-body">
+            <p class="step-sub">Delete videos from your device:</p>
+            <ol class="steps">
+                <li><span>Open your device's <strong>Files</strong> or <strong>My Files</strong> app.</span></li>
+                <li><span>Navigate to the <strong>Internal Storage</strong> or <strong>SD Card</strong>.</span></li>
+                <li><span>Find the <strong>TikTokSave</strong> folder.</span></li>
+                <li><span>Select and delete any videos you want to remove.</span></li>
+            </ol>
+            <p style="margin-top: 16px;">Alternatively, you can use the <strong>Delete</strong> option within the TikSave app if you have a download history view.</p>
+        </div>
+    </div>
+
+    <div class="section-card">
+        <div class="section-card-header">
+            <span class="section-num">03</span>
+            <h2>Deleting All Data by Uninstalling</h2>
+        </div>
+        <div class="section-card-body">
+            <p>Uninstalling TikSave from your device permanently deletes all locally stored data, including all app preferences and settings.</p>
+            <p>Downloaded videos saved to your TikTokSave folder are <strong>not</strong> automatically removed when uninstalling. To delete them, navigate to the TikTokSave folder in your file manager and delete the files manually before or after uninstalling.</p>
+            <ol class="steps" style="margin-top: 16px;">
+                <li><span>Long-press the TikSave icon on your home screen or app drawer.</span></li>
+                <li><span>Tap <strong>Uninstall</strong> and confirm.</span></li>
+                <li><span>All app data and preferences are permanently erased.</span></li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="section-card">
+        <div class="section-card-header">
+            <span class="section-num">04</span>
+            <h2>Clearing App Data via Android Settings</h2>
+        </div>
+        <div class="section-card-body">
+            <p>You can also wipe all app data without uninstalling using Android's built-in settings:</p>
+            <ol class="steps" style="margin-top: 12px;">
+                <li><span>Go to your device's <strong>Settings → Apps</strong>.</span></li>
+                <li><span>Find and tap <strong>TikSave</strong>.</span></li>
+                <li><span>Tap <strong>Storage</strong>.</span></li>
+                <li><span>Tap <strong>Clear Data</strong>. This permanently deletes all app preferences and settings.</span></li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="section-card">
+        <div class="section-card-header">
+            <span class="section-num">05</span>
+            <h2>No Server-Side Data to Delete</h2>
+        </div>
+        <div class="section-card-body">
+            <p>Because TikSave does not collect or transmit any personal data, there is no data stored on any server or database to request deletion of. All of your data exists exclusively on your own device.</p>
+            <p>We have no user accounts, no cloud storage, and no backend systems that hold anything about you. The steps above are the complete and only data deletion process required.</p>
+            <p>The third-party API service (RapidAPI) may retain logs of API requests. Their data practices are governed by their own Privacy Policy and we have no control over their logging.</p>
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="email-card">
+        <h3>Have a question about your data?</h3>
+        <p>If you have any concerns about data deletion or need assistance, send us an email. We respond within 48 hours.</p>
+        <a href="mailto:raashidk.official@gmail.com?subject=TikSave%20Data%20Deletion%20Request" class="btn-primary">
+            &#9993; &nbsp;Contact Support
+        </a>
+        <span class="email-note">raashidk.official@gmail.com</span>
+    </div>
+
+</div>
+
+<footer>
+    <div class="footer-brand">
+        <div class="footer-brand-mark">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3V2z" fill="#8856EE"/>
+            </svg>
+        </div>
+        <span class="footer-brand-name">TikSave</span>
+    </div>
+    <ul class="footer-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="terms.html">Terms of Service</a></li>
+        <li><a href="deletion.html">Data Deletion</a></li>
+        <li><a href="mailto:raashidk.official@gmail.com">Contact</a></li>
+    </ul>
+    <span class="footer-copy">&copy; 2025 TikSave. All rights reserved.</span>
+</footer>
+
+</body>
+</html>
