@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Privacy Policy – TikSave</title>
+    <meta name="description" content="TikSave Privacy Policy. No logs, no personal data collected, no accounts required." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --primary: #8856EE;
+            --primary-dim: rgba(136, 86, 238, 0.10);
+            --primary-glow: rgba(136, 86, 238, 0.28);
+            --primary-border: rgba(136, 86, 238, 0.22);
+            --bg: #08080F;
+            --surface: #0F0F1A;
+            --text: #F0F0F8;
+            --muted: #7070A0;
+            --border: #1A1A2E;
+            --border2: #22223A;
+            --mono: 'JetBrains Mono', monospace;
+            --sans: 'Inter', sans-serif;
+        }
+
+        html { scroll-behavior: smooth; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(136,86,238,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(136,86,238,0.02) 1px, transparent 1px);
+            background-size: 52px 52px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 48px;
+            background: rgba(8,8,15,0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .nav-logo-mark {
+            width: 30px; height: 30px;
+            background: var(--primary-dim);
+            border: 1px solid var(--primary-border);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-logo-mark svg { width: 14px; height: 14px; display: block; }
+
+        .nav-logo-text {
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .nav-links { display: flex; gap: 28px; list-style: none; }
+        .nav-links a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.84rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--primary); }
+
+        .page-header {
+            position: relative;
+            z-index: 1;
+            padding: 140px 24px 64px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .page-header::after {
+            content: '';
+            position: absolute;
+            bottom: -1px; left: 50%;
+            transform: translateX(-50%);
+            width: 90px; height: 2px;
+            background: var(--primary);
+        }
+
+        .page-label {
+            font-family: var(--mono);
+            font-size: 0.65rem;
+            color: var(--primary);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+
+        .page-header h1 {
+            font-size: clamp(2.2rem, 5vw, 3.4rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.05;
+            margin-bottom: 16px;
+        }
+
+        .page-header p {
+            color: var(--muted);
+            font-size: 0.95rem;
+            max-width: 480px;
+            margin: 0 auto 20px;
+        }
+
+        .date-tag {
+            display: inline-block;
+            font-family: var(--mono);
+            font-size: 0.66rem;
+            color: var(--muted);
+            background: var(--surface);
+            border: 1px solid var(--border2);
+            border-radius: 4px;
+            padding: 4px 12px;
+            letter-spacing: 0.08em;
+        }
+
+        .content-wrap {
+            position: relative;
+            z-index: 1;
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 72px 24px 100px;
+        }
+
+        .summary-box {
+            background: var(--primary-dim);
+            border: 1px solid rgba(136,86,238,0.25);
+            border-radius: 14px;
+            padding: 24px 28px;
+            margin-bottom: 56px;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+
+        .summary-box .icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 2px; }
+        .summary-box p { color: var(--text); font-size: 0.91rem; line-height: 1.7; }
+        .summary-box strong {
+            display: block;
+            font-family: var(--mono);
+            font-size: 0.66rem;
+            color: var(--primary);
+            letter-spacing: 0.1em;
+            margin-bottom: 8px;
+        }
+
+        .toc {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 26px 28px;
+            margin-bottom: 60px;
+        }
+
+        .toc-title {
+            font-family: var(--mono);
+            font-size: 0.65rem;
+            color: var(--primary);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .toc ol {
+            list-style: none;
+            counter-reset: toc;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 8px 20px;
+        }
+
+        .toc li { counter-increment: toc; }
+
+        .toc a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.83rem;
+            transition: color 0.2s;
+        }
+
+        .toc a::before {
+            content: counter(toc, decimal-leading-zero);
+            font-family: var(--mono);
+            font-size: 0.65rem;
+            color: var(--primary);
+            opacity: 0.65;
+            min-width: 22px;
+        }
+
+        .toc a:hover { color: var(--primary); }
+
+        .policy-section {
+            margin-bottom: 48px;
+            scroll-margin-top: 96px;
+        }
+
+        .section-head {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+
+        .section-num {
+            font-family: var(--mono);
+            font-size: 0.64rem;
+            color: var(--primary);
+            background: var(--primary-dim);
+            border: 1px solid var(--primary-border);
+            border-radius: 4px;
+            padding: 3px 10px;
+            letter-spacing: 0.08em;
+            white-space: nowrap;
+        }
+
+        .section-head h2 {
+            font-size: 1.02rem;
+            font-weight: 600;
+            color: var(--text);
+            letter-spacing: -0.01em;
+        }
+
+        .policy-body {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 24px 28px;
+            color: var(--muted);
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+
+        .policy-body p + p { margin-top: 14px; }
+        .policy-body strong { color: var(--text); }
+        .policy-body a { color: var(--primary); text-decoration: none; }
+        .policy-body a:hover { text-decoration: underline; }
+
+        hr {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 52px 0;
+        }
+
+        footer {
+            position: relative;
+            z-index: 1;
+            border-top: 1px solid var(--border);
+            padding: 40px 48px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-brand { display: flex; align-items: center; gap: 10px; }
+        .footer-brand-mark {
+            width: 26px; height: 26px;
+            background: var(--primary-dim);
+            border: 1px solid var(--primary-border);
+            border-radius: 7px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .footer-brand-mark svg { width: 12px; height: 12px; display: block; }
+        .footer-brand-name { font-size: 0.9rem; font-weight: 700; color: var(--text); }
+
+        .footer-links { display: flex; gap: 24px; list-style: none; flex-wrap: wrap; }
+        .footer-links a { color: var(--muted); text-decoration: none; font-size: 0.83rem; transition: color 0.2s; }
+        .footer-links a:hover { color: var(--primary); }
+        .footer-copy { color: var(--muted); font-size: 0.74rem; font-family: var(--mono); }
+
+        @media (max-width: 640px) {
+            nav { padding: 14px 20px; }
+            .nav-links { display: none; }
+            .page-header { padding: 110px 20px 48px; }
+            .content-wrap { padding: 48px 20px 80px; }
+            .policy-body { padding: 18px 20px; }
+            .toc ol { grid-template-columns: 1fr; }
+            footer { flex-direction: column; padding: 32px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="index.html" class="nav-logo">
+        <div class="nav-logo-mark">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3V2z" fill="#8856EE"/>
+            </svg>
+        </div>
+        <span class="nav-logo-text">TikSave</span>
+    </a>
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+        <li><a href="terms.html">Terms</a></li>
+        <li><a href="deletion.html">Data Deletion</a></li>
+    </ul>
+</nav>
+
+<div class="page-header">
+    <div class="page-label">Legal</div>
+    <h1>Privacy Policy</h1>
+    <p>TikSave is built around one principle — your activity is your business, not ours.</p>
+    <span class="date-tag">Last updated: June 2025</span>
+</div>
+
+<div class="content-wrap">
+
+    <div class="summary-box">
+        <div class="icon">&#128274;</div>
+        <p>
+            <strong>THE SHORT VERSION</strong>
+            TikSave does not collect, store, or sell your personal information. No account is required. We do not log your browsing activity, download history, or any data about what you download. Your privacy is our priority.
+        </p>
+    </div>
+
+    <div class="toc">
+        <div class="toc-title">Contents</div>
+        <ol>
+            <li><a href="#s1">Information We Collect</a></li>
+            <li><a href="#s2">How the App Works</a></li>
+            <li><a href="#s3">Permissions We Request</a></li>
+            <li><a href="#s4">Third-Party Services</a></li>
+            <li><a href="#s5">Data Retention</a></li>
+            <li><a href="#s6">Children's Privacy</a></li>
+            <li><a href="#s7">Changes to This Policy</a></li>
+            <li><a href="#s8">Contact Us</a></li>
+        </ol>
+    </div>
+
+    <div class="policy-section" id="s1">
+        <div class="section-head">
+            <span class="section-num">01</span>
+            <h2>Information We Collect</h2>
+        </div>
+        <div class="policy-body">
+            <p>TikSave does not collect personally identifiable information. We do not ask for your name, email address, phone number, or any information that identifies you as an individual.</p>
+            <p>No account creation or sign-in is required to use the app. You install it, paste a link, and download — that's all.</p>
+            <p>The only data sent from the app is the TikTok URL you paste, which is sent to our API server to fetch the video download URL. This URL is not stored, logged, or shared.</p>
+        </div>
+    </div>
+
+    <div class="policy-section" id="s2">
+        <div class="section-head">
+            <span class="section-num">02</span>
+            <h2>How the App Works</h2>
+        </div>
+        <div class="policy-body">
+            <p>When you paste a TikTok link and tap download, the app sends that URL to a third-party API service (RapidAPI) to fetch the video download information. The API returns the video URL, title, author, thumbnail, and other metadata.</p>
+            <p>The app then downloads the video directly to your device using your internet connection. This download happens entirely between your device and the video hosting server.</p>
+            <p>We do not store, cache, or log any video content. We do not retain your download history. The API request is transient and does not create a permanent record.</p>
+        </div>
+    </div>
+
+    <div class="policy-section" id="s3">
+        <div class="section-head">
+            <span class="section-num">03</span>
+            <h2>Permissions We Request</h2>
+        </div>
+        <div class="policy-body">
+            <p><strong>Storage / Media (Video)</strong> — Required to save downloaded videos to your device. On Android 13+, we request READ_MEDIA_VIDEO and WRITE_EXTERNAL_STORAGE (for older versions).</p>
+            <p><strong>Internet</strong> — Required to make API requests and download videos from TikTok servers.</p>
+            <p><strong>Notifications</strong> — Optional. Used to show download completion notifications. You can deny this permission and the app will still work.</p>
+            <p>You can revoke any permission at any time via Android Settings → Apps → TikSave → Permissions.</p>
+        </div>
+    </div>
+
+    <div class="policy-section" id="s4">
+        <div class="section-head">
+            <span class="section-num">04</span>
+            <h2>Third-Party Services</h2>
+        </div>
+        <div class="policy-body">
+            <p>TikSave uses the following third-party services:</p>
+            <p><strong>RapidAPI</strong> — The app uses the "TikTok Download Without Watermark" API hosted on RapidAPI. When you paste a link, the URL is sent to RapidAPI to fetch video metadata and download URLs. RapidAPI's data practices are governed by their own Privacy Policy.</p>
+            <p><strong>No analytics or advertising SDKs</strong> — TikSave does not integrate analytics, crash reporting, or advertising SDKs. We do not track your usage.</p>
+        </div>
+    </div>
+
+    <div class="policy-section" id="s5">
+        <div class="section-head">
+            <span class="section-num">05</span>
+            <h2>Data Retention</h2>
+        </div>
+        <div class="policy-body">
+            <p>Because we do not collect personal data, there is no personal data to retain or delete on our end.</p>
+            <p>Downloaded videos are saved to your device storage. You can delete them at any time using your device's file manager. Uninstalling the app removes all app data and preferences from your device.</p>
+        </div>
+    </div>
+
+    <div class="policy-section" id="s6">
+        <div class="section-head">
+            <span class="section-num">06</span>
+            <h2>Children's Privacy</h2>
+        </div>
+        <div class="policy-body">
+            <p>TikSave is not directed at children under the age of 13. We do not knowingly collect personal information from any user, including children. Since no personal data is collected, the app presents no specific data privacy risk to younger users.</p>
+        </div>
+    </div>
+
+    <div class="policy-section" id="s7">
+        <div class="section-head">
+            <span class="section-num">07</span>
+            <h2>Changes to This Policy</h2>
+        </div>
+        <div class="policy-body">
+            <p>We may update this Privacy Policy as the app evolves. When we do, we will update the date at the top of this page. We encourage you to review this policy periodically.</p>
+            <p>Continued use of the app after changes are published constitutes your acceptance of the updated policy.</p>
+        </div>
+    </div>
+
+    <div class="policy-section" id="s8">
+        <div class="section-head">
+            <span class="section-num">08</span>
+            <h2>Contact Us</h2>
+        </div>
+        <div class="policy-body">
+            <p>If you have any questions or concerns about this Privacy Policy, please contact us.</p>
+            <p>Email: <a href="mailto:raashidk.official@gmail.com">raashidk.official@gmail.com</a></p>
+            <p>Phone: <a href="tel:+923236258870">0323 6258870</a></p>
+            <p>We aim to respond to all privacy-related inquiries within 48 hours.</p>
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="summary-box">
+        <div class="icon">&#9989;</div>
+        <p>TikSave helps you download TikTok videos — and that's it. No tracking, no profiling, no selling of your data. Your privacy is non-negotiable.</p>
+    </div>
+
+</div>
+
+<footer>
+    <div class="footer-brand">
+        <div class="footer-brand-mark">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3V2z" fill="#8856EE"/>
+            </svg>
+        </div>
+        <span class="footer-brand-name">TikSave</span>
+    </div>
+    <ul class="footer-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="terms.html">Terms of Service</a></li>
+        <li><a href="deletion.html">Data Deletion</a></li>
+        <li><a href="mailto:raashidk.official@gmail.com">Contact</a></li>
+    </ul>
+    <span class="footer-copy">&copy; 2025 TikSave. All rights reserved.</span>
+</footer>
+
+</body>
+</html>
